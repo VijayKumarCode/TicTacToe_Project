@@ -82,4 +82,6 @@ java -cp out com.tictactoe.Main
 
     👤 Career Focus
 
-I am an aspiring Remote Software Engineer specializing in Java and Open Source development. This project serves as a practical application of my DSA studies and my commitment to writing clean, maintainable code that aligns with the Ubuntu/Canonical ecosystem.
+I am an aspiring Remote Software Engineer specializing in Java and Open Source development.
+This project serves as a practical application of my DSA studies and my commitment to writing clean,
+maintainable code that aligns with the Ubuntu/Canonical ecosystem.
