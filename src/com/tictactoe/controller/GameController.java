@@ -165,8 +165,7 @@ public class GameController {
                 if (board.makeMove(r, c, getAiSymbol())) {
                     gamePanel.updateButton(i, getAiSymbol());
 
-                    if (board.checkWin(getAiSymbol())) {
-                        announceWinner(ai);
+                    if (checkGameOver(getAiSymbol())) {
                         return;
                     }
 
@@ -178,29 +177,33 @@ public class GameController {
     }
 
     private void announceWinner(Player winner) {
-        // >>> THIS HIGHLIGHTS getName() <<<
-        JOptionPane.showMessageDialog(parentFrame, winner.getName() + " has won the match!");
+        // Professional touch: Include the symbol in the announcement
+        String message = String.format("%s (%s) has won the match!",
+                winner.getName(), winner.getSymbol());
+
+        JOptionPane.showMessageDialog(parentFrame, message, "Victory", JOptionPane.INFORMATION_MESSAGE);
+        startNewGameFlow();
+    }
+
+    private void announceDraw() {
+        JOptionPane.showMessageDialog(parentFrame, "The match is a Draw!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         startNewGameFlow();
     }
 
     private boolean checkGameOver(String symbol) {
+        // 1. Check for Win
         if (board.checkWin(symbol)) {
             Player winner = (user.getSymbol().equals(symbol)) ? user : ai;
-
-            // USE HERE: winner.getName() will now reflect the registered username or "Guest"
-            JOptionPane.showMessageDialog(parentFrame,
-                    winner.getName() + " (" + symbol + ") Wins!",
-                    "Game Over",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            startNewGameFlow();
+            announceWinner(winner); // Delegate to the specialized method
             return true;
         }
+
+        // 2. Check for Draw (The Board must have an isFull() method)
         if (board.isFull()) {
-            JOptionPane.showMessageDialog(parentFrame, "It's a Draw!");
-            startNewGameFlow();
+            announceDraw(); // Delegate to the specialized method
             return true;
         }
+
         return false;
     }
 

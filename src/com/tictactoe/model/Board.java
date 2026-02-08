@@ -47,9 +47,12 @@ public class Board {
 
     }
     public boolean isFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (grid[i][j].isEmpty()) return false;
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                // If ANY cell is empty/null, the board is NOT full
+                if (grid[r][c] == null || grid[r][c].trim().isEmpty()) {
+                    return false;
+                }
             }
         }
         return true;
