@@ -1,6 +1,3 @@
-It looks like your Markdown formatting broke—specifically in the "Technical Highlights" and "Build" sections where those empty lines and extra spaces might have been interpreted as broken HTML or code blocks.
-
-When you're preparing this for a professional docs commit, you want it to be perfectly scannable for a recruiter. I've cleaned up the syntax, fixed the broken lists, and ensured the directory tree is clean.
 🎮 Tic-Tac-Toe: Ubuntu GUI Edition
 
 A modular, industry-standard Tic-Tac-Toe application built with Java Swing. This project showcases high-level software engineering principles including the MVC pattern, Minimax AI, and Unit Testing.
@@ -19,8 +16,6 @@ The winner of the randomized pre-game toss is granted the power to decide the op
     Play First: Assigns the player "X" and the first move.
 
     Pass Turn: Assigns the player "O" and allows the AI to open the game.
-
----
 
 ## 📂 Project Structure
 
