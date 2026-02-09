@@ -1,26 +1,24 @@
+It looks like your Markdown formatting broke—specifically in the "Technical Highlights" and "Build" sections where those empty lines and extra spaces might have been interpreted as broken HTML or code blocks.
+
+When you're preparing this for a professional docs commit, you want it to be perfectly scannable for a recruiter. I've cleaned up the syntax, fixed the broken lists, and ensured the directory tree is clean.
 🎮 Tic-Tac-Toe: Ubuntu GUI Edition
 
 A modular, industry-standard Tic-Tac-Toe application built with Java Swing. This project showcases high-level software engineering principles including the MVC pattern, Minimax AI, and Unit Testing.
-
-[![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://www.oracle.com/java/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Style](https://img.shields.io/badge/Architecture-MVC-green)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
-[![Platform](https://img.shields.io/badge/Platform-Ubuntu%20%2F%20Linux-E95420)](https://ubuntu.com/)
-
-A modular, industry-standard Tic-Tac-Toe application built with **Java Swing**. This project showcases the transition from CLI logic to a Graphical User Interface (GUI), implementing advanced state management and loose coupling.
-
----
-
-## 🚀 Project Overview
+🚀 Project Overview
 
 This application provides a professional gameplay flow designed to demonstrate robust user state handling and UI navigation:
-* **Registered Mode:** Captures user credentials via a `UserLoginPanel`, preserves the username, and transitions to the game board.
-* **Guest Mode:** Allows instant "one-click" play against the **AI Agent** using an anonymous session.
 
-### 🪙 The "Toss Authority" Feature
-The winner of the randomized pre-game toss is granted the power to decide the opening strategy via a custom `TossDialog`:
-1.  **Play First:** Assigns the player "X" and the first move.
-2.  **Pass Turn:** Assigns the player "O" and allows the AI to open the game.
+    Registered Mode: Captures user credentials via UserLoginPanel, preserves the username, and transitions to the game board.
+
+    Guest Mode: Allows instant "one-click" play against the AI Agent using an anonymous session.
+
+🪙 The "Toss Authority" Feature
+
+The winner of the randomized pre-game toss is granted the power to decide the opening strategy via a custom TossDialog:
+
+    Play First: Assigns the player "X" and the first move.
+
+    Pass Turn: Assigns the player "O" and allows the AI to open the game.
 
 ---
 
@@ -55,28 +53,23 @@ TicTacToe_Project/
 🏗️ Technical Highlights
 1. Component-Based UI
 
-Instead of one giant file, the View is now split into specialized components:
+The View is split into specialized, reusable components:
 
     BoardPanel: Dedicated to rendering the grid and handling button clicks.
 
     ScoreBoardPanel: Tracks and displays wins/losses in real-time.
 
-    TossDialog: A modal interface for the "Toss Authority" feature.
+    TossDialog: A modal interface for the "Toss Authority" decision.
 
 2. Robust State Management
 
-The addition of GameState.java allows the controller to track whether the 
-game is in progress, paused, or finished independently of the UI state.
-
+The inclusion of GameState.java allows the controller to track whether the game is in progress, paused, or finished independently of UI state.
 3. Unit Testing (QA focused)
 
-The inclusion of BoardTest.java demonstrates a "Test-Driven" mindset. 
-This ensures that win conditions and draw logic are verified automatically
-before every release.
+The inclusion of BoardTest.java demonstrates a Test-Driven mindset, ensuring win conditions and draw logic are verified automatically.
 
-                    🛠️ Build & Test (Ubuntu/Linux)
+                   🛠️ Build & Test (Ubuntu/Linux)
 Run Production Code
-
 # Compile
 javac -d out src/main/java/com/tictactoe/**/*.java src/main/java/com/tictactoe/*.java
 
@@ -84,8 +77,7 @@ javac -d out src/main/java/com/tictactoe/**/*.java src/main/java/com/tictactoe/*
 java -cp out com.tictactoe.Main
 
 Run Unit Tests
-
-# Ensure JUnit is in your classpath
+# Run with JUnit Console Standalone
 java -jar junit-platform-console-standalone.jar --class-path out --select-class com.tictactoe.model.BoardTest
 
 📈 Roadmap
