@@ -1,3 +1,5 @@
+package com.tictactoe.model;
+
 /**
  * Problem No. #104
  * Difficulty: Easy
@@ -7,7 +9,7 @@
  * Space Complexity: O(1)
  */
 
-package com.tictactoe.model;
+
 
 public class Player {
     // Enum to define types for easier logic handling in the Controller

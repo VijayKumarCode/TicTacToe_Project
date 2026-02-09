@@ -66,7 +66,7 @@ sudo apt install openjdk-17-jdk
 javac -d out src/com/tictactoe/Main.java
 
 # Run
-java -cp out com.tictactoe.Main
+java -cp out main.java.com.tictactoe.Main
 
 📈 Roadmap
 

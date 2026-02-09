@@ -1,3 +1,5 @@
+package com.tictactoe.view;
+
 /*
  * Problem No. #110
  * Difficulty: Intermediate
@@ -7,7 +9,7 @@
  * Space Complexity: O(1)
 */
 
-package com.tictactoe.view;
+
 
 import com.tictactoe.controller.NavigationController;
 import javax.swing.*;

@@ -1,3 +1,5 @@
+package com.tictactoe;
+
 /**
  * Problem No. #100
  * Difficulty: Beginner
@@ -6,7 +8,8 @@
  * Time Complexity: N/A
  * Space Complexity: N/A
  */
-package com.tictactoe;
+
+
 
 import com.tictactoe.view.MainFrame;
 import javax.swing.SwingUtilities;

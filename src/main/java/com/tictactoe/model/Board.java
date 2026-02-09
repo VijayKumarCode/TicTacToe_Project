@@ -1,3 +1,5 @@
+package com.tictactoe.model;
+
 /**
  * Problem No. #101
  * Difficulty: Easy
@@ -7,7 +9,7 @@
  * Space Complexity: O(1)
  */
 
-package com.tictactoe.model;
+
 
 public class Board {
     private final String[][] grid;

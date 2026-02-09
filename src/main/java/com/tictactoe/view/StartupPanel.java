@@ -1,3 +1,5 @@
+package com.tictactoe.view;
+
 /**
  * Problem No. #102
  * Difficulty: Easy
@@ -6,24 +8,32 @@
  * Time Complexity: N/A
  * Space Complexity: N/A
  */
-package com.tictactoe.view;
+
+
 
 import com.tictactoe.controller.GameController;
 import com.tictactoe.controller.NavigationController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class StartupPanel extends JPanel {
-    private NavigationController nav;
-    private GameController gameController;
+    private final NavigationController nav;
+    private final GameController gameController;
 
     public StartupPanel(NavigationController nav, GameController gameController) {
         this.nav = nav;
         this.gameController = gameController;
         setLayout(new GridBagLayout()); // Centers everything
+
         JPanel content = new JPanel(new GridLayout(3, 1, 10, 10));
+
         JLabel title = new JLabel("Tic Tac Toe", SwingConstants.CENTER);
+
         title.setFont(new Font("Ubuntu", Font.BOLD, 24));
+        if (!title.getFont().getFamily().equals("Ubuntu")) {
+            title.setFont(new Font("SansSerif", Font.BOLD, 24)); // Professional fallback
+        }
 
         JButton btnRegister = new JButton("Login / Register");
         JButton btnGuest = new JButton("Play as Guest");

@@ -1,3 +1,5 @@
+package com.tictactoe.controller;
+
 /**
  * Problem No. #108
  * Difficulty: Intermediate
@@ -7,13 +9,12 @@
  * Space Complexity: O(1)
  */
 
-package com.tictactoe.controller;
-
+import com.tictactoe.view.components.TossDialog;
 import com.tictactoe.model.Board;
 import com.tictactoe.model.Player;
 import com.tictactoe.view.GamePanel;
 import com.tictactoe.view.UserLoginPanel;
-import com.tictactoe.view.components.TossDialog;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +27,8 @@ public class GameController {
     private Player ai;
     private boolean isUserTurn;
 
-    private String currentDifficulty = "Easy";
+    public enum Difficulty { EASY, MEDIUM, HARD }
+    private Difficulty difficulty = Difficulty.EASY;
 
     private GamePanel gamePanel;
     private UserLoginPanel loginPanel;
@@ -39,15 +41,18 @@ public class GameController {
         this.parentFrame = parentFrame;
         this.nav = nav;
 
-        this.user = new Player("ANONYMOUS",  "X",Player.PlayerType.ANONYMOUS);
+        this.user = new Player("ANONYMOUS",  "X", Player.PlayerType.ANONYMOUS);
         this.ai = new Player("AI", "O",Player.PlayerType.AI);
     }
 
     public void setDifficulty(String level) {
-        this.currentDifficulty = level;
-        // Industry Tip: Use a status update instead of just a Print statement
-        if (gamePanel != null) {
-            gamePanel.updateStatus("Difficulty: " + level);
+        try {
+            this.difficulty = Difficulty.valueOf(level.toUpperCase());
+            if (gamePanel != null) {
+                gamePanel.updateStatus("Difficulty: " + level);
+            }
+        } catch (IllegalArgumentException e) {
+            this.difficulty = Difficulty.EASY;
         }
     }
 
@@ -60,26 +65,21 @@ public class GameController {
         this.loginPanel.addLoginListener(this::handleLogin);
     }
     public void handlePlayerMove(int index) {
-        // 1. Guard Clauses: Ensure it's the user's turn and the game isn't over
         if (!isUserTurn()) return;
 
         int row = index / 3;
         int col = index % 3;
 
-        // 2. Update Model (Logical board)
         if (board.makeMove(row, col, getUserSymbol())) {
-
-            // 3. Update View (Visual board)
             gamePanel.updateButton(index, getUserSymbol());
 
-            // 4. Check Termination: Win or Draw
             if (checkGameOver(getUserSymbol())) return;
 
-            // 5. Switch Turn
             isUserTurn = false;
 
-            // 6. Trigger AI with Lifecycle Management
-            // We assign the timer to our class field so handleHomeNavigation() can stop it
+            // --- ADDED UX FEEDBACK ---
+            gamePanel.updateStatus("AI is thinking...");
+
             aiTimer = new Timer(500, e -> triggerAIMove());
             aiTimer.setRepeats(false);
             aiTimer.start();
@@ -181,18 +181,14 @@ public class GameController {
     }
 
     private void triggerAIMove() {
-        // 1. Safety check
         if (ai.getType() != Player.PlayerType.AI) return;
 
-        int moveIndex = switch (currentDifficulty) {
-            case "Hard" -> getBestMoveMinimax();
-            case "Medium" -> getSmartMove();
-            default -> getRandomMove();
+        int moveIndex = switch (difficulty) {
+            case HARD -> getBestMoveMinimax();
+            case MEDIUM -> getSmartMove();
+            case EASY -> getRandomMove();
         };
 
-        // 2. Strategy Switching based on currentDifficulty
-
-        // 3. Execute the chosen move
         if (moveIndex != -1) {
             executeAIMove(moveIndex);
         }
@@ -208,7 +204,9 @@ public class GameController {
             if (checkGameOver(getAiSymbol())) return;
 
             isUserTurn = true;
-            gamePanel.updateStatus("Your Turn (" + getUserSymbol() + ")");
+
+            // --- RESET STATUS ---
+            gamePanel.updateStatus("Your Turn! (" + getUserSymbol() + ")");
         }
     }
 
@@ -311,15 +309,24 @@ public class GameController {
     }
 
     private void announceWinner(Player winner) {
-        // Professional touch: Include the symbol in the announcement
         String message = String.format("%s (%s) has won the match!",
                 winner.getName(), winner.getSymbol());
+
+        // This call will make the method "highlighted" in GamePanel
+        if (gamePanel != null) {
+            String type = (winner.getType() == Player.PlayerType.AI) ? "AI" : "USER";
+            gamePanel.updateScore(type);
+        }
 
         JOptionPane.showMessageDialog(parentFrame, message, "Victory", JOptionPane.INFORMATION_MESSAGE);
         startNewGameFlow();
     }
 
     private void announceDraw() {
+        if (gamePanel != null) {
+            // MUST match what updateScore is looking for
+            gamePanel.updateScore("DRAW");
+        }
         JOptionPane.showMessageDialog(parentFrame, "The match is a Draw!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         startNewGameFlow();
     }

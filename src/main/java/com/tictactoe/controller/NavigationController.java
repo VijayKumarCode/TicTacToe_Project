@@ -1,3 +1,5 @@
+package com.tictactoe.controller;
+
 /**
  Problem No. #107
  * Difficulty: Easy
@@ -7,33 +9,46 @@
  * Space Complexity: O(1)
  */
 
-package com.tictactoe.controller;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class NavigationController {
+    public static final String STARTUP = "STARTUP";
+    public static final String LOGIN = "LOGIN";
+    public static final String GAME = "GAME";
+    public static final String LOBBY = "LOBBY";
+
     private final JPanel container;
     private final CardLayout cardLayout;
 
     public NavigationController(JPanel container) {
+        if (!(container.getLayout() instanceof CardLayout)) {
+            throw new IllegalArgumentException("Container must use CardLayout");
+        }
+
         this.container = container;
         this.cardLayout = (CardLayout) container.getLayout();
     }
 
+    // Generic method to reduce repetition
+    private void navigateTo(String screenName) {
+        cardLayout.show(container, screenName);
+    }
+
     public void showStartup() {
-        cardLayout.show(container, "STARTUP");
+        navigateTo(STARTUP);
     }
 
     public void showLogin() {
-        cardLayout.show(container, "LOGIN");
+        navigateTo(LOGIN);
     }
 
     public void showGame() {
-        cardLayout.show(container, "GAME");
+        navigateTo(GAME);
     }
 
     public void showLobby() {
-        cardLayout.show(container, "LOBBY");
+        navigateTo(LOBBY);
     }
 }

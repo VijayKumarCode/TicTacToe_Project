@@ -1,3 +1,5 @@
+package com.tictactoe.view.components;
+
 /**
  * Problem No. #111
  * Difficulty: Intermediate
@@ -6,14 +8,14 @@
  * Time Complexity: O(1)
  * Space Complexity: O(1)
  */
-package com.tictactoe.view.components;
+
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TossDialog extends JDialog {
     private boolean playFirst = true; // Default choice
-    private String winnerName;
+    private final String winnerName;
 
     public TossDialog(JFrame parent, String winnerName) {
         super(parent, "Toss Authority", true);

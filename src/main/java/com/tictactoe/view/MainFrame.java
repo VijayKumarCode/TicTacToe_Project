@@ -1,3 +1,5 @@
+package com.tictactoe.view;
+
 
 /**
  * Problem No. #101
@@ -8,18 +10,20 @@
  * Space Complexity: N/A
  */
 
-package com.tictactoe.view;
+
+
 
 import com.tictactoe.controller.GameController;
 import com.tictactoe.controller.NavigationController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private  CardLayout cardLayout;
-    private  JPanel mainContainer;
-    private NavigationController nav;
-    private GameController gameController;
+    private  final CardLayout cardLayout;
+    private  final JPanel mainContainer;
+    private final NavigationController nav;
+    private final GameController gameController;
 
     public MainFrame() {
         // 1. Basic Window Setup
@@ -31,9 +35,9 @@ public class MainFrame extends JFrame {
         // 2. Layout & Controller Initialization
         cardLayout = new CardLayout();
         mainContainer = new JPanel(cardLayout);
-        nav = new NavigationController(mainContainer);
 
-        // Initialize GameController with 'this' frame for dialog centering
+        // Pass the container to the controller
+        nav = new NavigationController(mainContainer);
         gameController = new GameController(this, nav);
 
         // 3. View Initialization & Connection
@@ -46,14 +50,13 @@ public class MainFrame extends JFrame {
         gameController.setLoginPanel(loginPanel);
         gameController.setGamePanel(gamePanel);
 
-        mainContainer.add(startupPanel, "STARTUP");
-        mainContainer.add(loginPanel,"LOGIN");
-        mainContainer.add(gamePanel,"GAME");
+        mainContainer.add(startupPanel, NavigationController.STARTUP);
+        mainContainer.add(loginPanel,NavigationController.LOGIN);
+        mainContainer.add(gamePanel,NavigationController.GAME);
 
         add(mainContainer);
 
         // 4. Show Initial Screen
-        cardLayout.show(mainContainer, "STARTUP");
         nav.showStartup();
     }
 }

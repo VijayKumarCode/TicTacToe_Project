@@ -1,3 +1,4 @@
+package com.tictactoe.model;
 
 /* Problem No. #103
  * Difficulty: Easy
@@ -7,7 +8,7 @@
  * Space Complexity: O(1)
  */
 
-package com.tictactoe.model;
+
 
 public enum GameState {
     IDLE,
