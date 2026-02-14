@@ -1,4 +1,4 @@
 [
-  {"name": "Ubuntu_Bot", "status": "Online"},
-  {"name": "Linus", "status": "Online"}
+    {"name":"", "symbol":"", "type":"REGISTERED", "status":"", "email":"", "password":""},
+    {"name":"vijayKu", "symbol":"O", "type":"REGISTERED", "status":"Online", "email":"abc@gmail.com", "password":"123"}
 ]

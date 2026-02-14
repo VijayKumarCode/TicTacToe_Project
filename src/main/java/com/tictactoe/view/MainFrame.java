@@ -1,19 +1,16 @@
 package com.tictactoe.view;
 
-
 /**
  * Problem No. #101
  * Difficulty: Intermediate
  * Description: Main Application Frame using CardLayout for State Management
  * Link: N/A
- * Time Complexity: N/A
- * Space Complexity: N/A
+ * Time Complexity: O(1)
+ * Space Complexity: O(n) where n is the number of panels
  */
-
 
 import com.tictactoe.controller.GameController;
 import com.tictactoe.controller.NavigationController;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,7 +20,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         // 1. Basic Window Setup
-        setTitle("Tic-Tac-Toe");
+        setTitle("Tic-Tac-Toe - Ubuntu Edition");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 600);
         setLocationRelativeTo(null);
@@ -32,28 +29,32 @@ public class MainFrame extends JFrame {
         NavigationController nav = new NavigationController(container);
         GameController gameController = new GameController(this, nav);
 
-        // 3. View Initialization & Connection
-        // Creating panels and injecting dependencies
+        // 3. View Initialization
         StartupPanel startupPanel = new StartupPanel(nav, gameController);
         GamePanel gamePanel = new GamePanel(gameController);
-        LobbyPanel lobbyPanel = new LobbyPanel(nav,gameController);
+        LobbyPanel lobbyPanel = new LobbyPanel(nav, gameController);
         UserLoginPanel loginPanel = new UserLoginPanel(nav);
 
-        //4. Connection (Dependency Injection)
+        // NEW: Initialize the Register Panel
+        UserRegisterPanel registerPanel = new UserRegisterPanel(nav);
+
+        // 4. Connection (Dependency Injection)
         gameController.setGamePanel(gamePanel);
         gameController.setLoginPanel(loginPanel);
         gameController.setLobbyPanel(lobbyPanel);
 
-        // Connect the GameController to the View components
+        // 5. Register Panels to Container
+        container.add(startupPanel, NavigationController.Screen.STARTUP);
+        container.add(gamePanel, NavigationController.Screen.GAME);
+        container.add(lobbyPanel, NavigationController.Screen.LOBBY);
+        container.add(loginPanel, NavigationController.Screen.LOGIN);
 
-        // 3. Register Panels to Container
-        container.add(startupPanel, NavigationController.STARTUP);
-        container.add(gamePanel, NavigationController.GAME);
-        container.add(lobbyPanel, NavigationController.LOBBY);
-        container.add(loginPanel, NavigationController.LOGIN);
+        // NEW: Register the Registration Panel
+        container.add(registerPanel, NavigationController.Screen.REGISTER);
 
         add(container);
-        // 4. Show Initial Screen
+
+        // 6. Show Initial Screen
         nav.showStartup();
     }
 }
