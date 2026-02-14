@@ -115,14 +115,21 @@ public class GameController {
             if (message == null) return;
 
             if (message.startsWith("MOVE:")) {
-                try {
-                    int index = Integer.parseInt(message.split(":")[1]);
-                    handleIncomingMove(index);
-                } catch (Exception e) {
-                    System.err.println("Malformed move received");
-                }
+                int index = Integer.parseInt(message.split(":")[1]);
+                handleIncomingMove(index);
             } else if (message.equals("CONNECTED")) {
                 updateStatus("Connected!");
+                // ONLY the Host triggers the start flow for both
+                if (networkManager.isHost()) {
+                    startNewGameFlow();
+                }
+            } else if (message.startsWith("TOSS_RESULT:")) {
+                boolean hostWon = Boolean.parseBoolean(message.split(":")[1]);
+                // Client calculates their result based on the Host's roll
+                boolean iWon = networkManager.isHost() ? hostWon : !hostWon;
+                handleNetworkToss(iWon);
+            } else if (message.equals("RESET_GAME")) {
+                resetLocalBoardState();
             } else if (message.equals("CONNECTION_LOST")) {
                 showConnectionError("Opponent disconnected.");
             }
@@ -240,20 +247,19 @@ public class GameController {
     }
 
     public void startNewGameFlow() {
-        this.isAiProcessing = false;
-        this.isGameActive = true;
-
-        if (gamePanel != null) gamePanel.clearBoard();
-        board.resetBoard();
+        resetLocalBoardState();
 
         if (networkManager.isActive()) {
+            // NETWORK LOGIC: Host is the "Source of Truth"
             if (networkManager.isHost()) {
                 networkManager.sendMessage("RESET_GAME");
                 boolean hostWonToss = Math.random() < 0.5;
                 networkManager.sendMessage("TOSS_RESULT:" + hostWonToss);
                 handleNetworkToss(hostWonToss);
             }
+            // Note: Client does nothing here; it waits for the TOSS_RESULT message.
         } else {
+            // GUEST/AI LOGIC: Purely local
             boolean userWonToss = Math.random() < 0.5;
             if (userWonToss) handleUserTossWin();
             else handleAITossWin();
@@ -261,13 +267,27 @@ public class GameController {
             if (!isUserTurn) triggerAIMove();
         }
     }
+    private void resetLocalBoardState() {
+        this.isAiProcessing = false;
+        this.isGameActive = true;
+        if (gamePanel != null) gamePanel.clearBoard();
+        board.resetBoard();
+    }
 
     private void handleNetworkToss(boolean iWon) {
-        if (iWon) handleUserTossWin();
-        else {
-            isMyTurn = false;
+        if (iWon) {
+            this.mySymbol = "X";
+            this.isMyTurn = true;
+            this.user.setSymbol("X");
+            TossDialog dialog = new TossDialog(parentFrame, "You");
+            dialog.setVisible(true);
+        } else {
+            this.mySymbol = "O";
+            this.isMyTurn = false;
+            this.user.setSymbol("O");
             updateStatus("Opponent won Toss. Waiting...");
         }
+        refreshStatus();
     }
 
     private void handleUserTossWin() {

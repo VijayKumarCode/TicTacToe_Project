@@ -1,4 +1,5 @@
 [
     {"name":"", "symbol":"", "type":"REGISTERED", "status":"", "email":"", "password":""},
-    {"name":"vijayKu", "symbol":"O", "type":"REGISTERED", "status":"Online", "email":"abc@gmail.com", "password":"123"}
+    {"name":"vijayKu", "symbol":"O", "type":"REGISTERED", "status":"Online", "email":"abc@gmail.com", "password":"123"},
+    {"name":"vijayKy", "symbol":"O", "type":"REGISTERED", "status":"Online", "email":"cba@gmail.com", "password":"321"}
 ]
