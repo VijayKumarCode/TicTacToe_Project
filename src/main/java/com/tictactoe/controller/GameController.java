@@ -539,6 +539,10 @@ public class GameController {
         if (lobbyPanel != null) lobbyPanel.refreshLobby();
     }
 
-    public String getAiSymbol() { return ai.getSymbol(); }
-    public String getUserSymbol() { return user.getSymbol(); }
+    public String getAiSymbol() {
+        return ai.getSymbol();
+    }
+    public String getUserSymbol() {
+        return user.getSymbol();
+    }
 }
