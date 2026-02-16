@@ -1,12 +1,13 @@
 package com.tictactoe.controller;
 
 /*
- * Problem No. #108
- * Difficulty: Intermediate
- * Description: Controller managing game flow; Refactored to isolate Guest logic from Network logic.
- * Time Complexity: O(1)
- * Space Complexity: O(1)
- */
+Problem No. #001
+Difficulty: Medium
+Description: TicTacToe_java - A modular Java implementation of Tic-Tac-Toe.
+Link: https://github.com/VijayKumarCode/TicTacToe_java
+Time Complexity: O(1)
+Space Complexity: O(1)
+*/
 
 import com.tictactoe.model.Board;
 import com.tictactoe.model.JSONHandler;
